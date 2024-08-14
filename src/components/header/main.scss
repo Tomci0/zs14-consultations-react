@@ -1,0 +1,161 @@
+@import '../../styles/variables.scss';
+
+#navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+
+    background-color: var(--navbar-background);
+    border-radius: $navbar-br;
+    box-shadow: $navbar-shadow;
+
+    #logo {
+        width: 20%;
+
+        img {
+            width: 40px;
+            height: 40px;
+
+            box-shadow: var(--navbar-image-shadow);
+        }
+    }
+
+    #navigation {
+        .nav {
+            display: flex;
+            gap: 1em;
+
+            .nav-link {
+                color: var(--text-color) !important;
+
+                box-shadow: $navbar-btn-shadow;
+
+                &.active {
+                    background-color: $navbar-btn-active-bg;
+                }
+
+                &:not(.active) {
+                    background-color: var(--navbar-btn-color);
+                }
+
+                &:hover {
+                    background-color: $navbar-btn-hover-bg;
+                }
+            }
+        }
+    }
+
+    #user {
+        display: flex;
+        width: 20%;
+
+        display: flex;
+        justify-content: center;
+
+        #theme-toggle {
+            color: var(--text-color);
+            font-size: 1em;
+            transition: 0.2s;
+
+            &:hover {
+                color: $theme-color;
+            }
+        }
+
+        #user-data {
+            padding: 0;
+            border: none;
+            text-decoration: none;
+
+            #image {
+                margin-right: 0.25rem;
+
+                img {
+                    width: 32px;
+                    height: 32px;
+                    box-shadow: var(--user-image-shadow);
+                    margin-right: 0.25rem;
+                }
+            }
+
+            #name {
+                color: var(--text-color);
+
+                font-weight: 300;
+                font-size: 0.8em;
+                transition: 0.2s;
+            }
+
+            &:hover {
+                #name {
+                    color: var(--dropdown-text-hover);
+                }
+            }
+        }
+    }
+}
+
+.tooltip {
+    --bs-tooltip-bg: var(--tooltip-background);
+    --bs-tooltip-color: var(--text-color);
+}
+
+// .tooltip-arrow {
+//     color: var(--tooltip-background);
+// }
+
+.tooltip-inner {
+    box-shadow: $tooltip-shadow;
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+    font-size: 0.8rem;
+
+    padding: 0.25rem 0.75rem;
+}
+
+// DROPDOWN
+
+.dropdown-menu {
+    color: var(--text-color);
+    background-color: var(--dropdown-background);
+    border-radius: $dropdown-border-radius;
+    box-shadow: $dropdown-shadow;
+    border: none;
+
+    padding: 0;
+    margin: 0;
+
+    overflow: hidden;
+}
+
+.dropdown-menu .dropdown-item {
+    padding: 0.3rem 1rem;
+    width: 100%;
+    font-size: 0.9em;
+    font-weight: 400;
+    transition: 0.2s;
+
+    display: flex;
+    align-items: center;
+
+    gap: 0.5em;
+}
+
+/* dropdovn item on hover */
+
+.dropdown-menu .dropdown-item:hover {
+    color: var(--text-color);
+    background-color: $theme-color;
+}
+
+.dropdown-menu .dropdown-item .icon {
+    font-size: 1.1em;
+}
+
+.dropdown-menu .dropdown-item .name {
+    font-size: 0.9em;
+    font-weight: 300;
+}

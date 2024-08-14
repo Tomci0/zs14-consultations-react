@@ -1,0 +1,17 @@
+.card {
+    background-color: var(--card-background);
+
+    .card-header {
+        background-color: var(--background);
+
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        font-size: 0.8rem;
+
+        .icon {
+            font-size: 1rem;
+        }
+    }
+}

@@ -1,0 +1,33 @@
+[data-bs-theme='dark'] {
+    // GENERAL
+
+    --text-color: #fff;
+    --shadow-color: rgba(0, 0, 0, 37%);
+
+    --background: #121212;
+
+    --elements-background: rgba(18, 18, 18, 0.902);
+
+    // NAVBAR
+    // --navbar-background: rgba(8, 2, 2, 0.902);
+    --navbar-background: var(--elements-background);
+
+    --navbar-btn-color: rgba(48, 48, 48, 0.9);
+
+    // DROPDOWN
+
+    --dropdown-background: var(--elements-background);
+    --dropdown-text-hover: #019232;
+
+    // TOOLTIP
+
+    --tooltip-background: var(--elements-background);
+
+    // CARD
+
+    --card-background: var(--elements-background);
+
+    // CALENDAR
+
+    --calenar-table-background: rgb(32, 32, 32);
+}

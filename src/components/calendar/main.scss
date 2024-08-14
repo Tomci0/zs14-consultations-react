@@ -1,0 +1,90 @@
+@import '../../styles/variables.scss';
+
+.datepicker {
+    display: flex;
+    gap: 0.5rem;
+
+    justify-content: center;
+    align-items: center;
+
+    .prev,
+    .next {
+        cursor: pointer;
+
+        display: flex;
+        justify-self: center;
+        align-items: center;
+
+        background-color: #303030;
+        border-radius: 50%;
+        padding: 2px 2.5px;
+
+        box-shadow: $calendar-date-buttons-shadow;
+
+        transition: 0.2s;
+
+        .iconify {
+            color: var(--text-color);
+            font-size: 1.5rem;
+        }
+
+        &:hover {
+            background-color: $theme-color;
+        }
+    }
+
+    .date {
+        display: flex;
+        justify-content: center;
+        gap: 0.25rem;
+    }
+}
+
+#calendar {
+    border-collapse: separate; /* Umożliwia zaokrąglenie rogów */
+    border-radius: 10px; /* Zaokrąglone rogi */
+    overflow: hidden; /* Ukrywa nadmiar treści poza zaokrąglonymi rogami */
+
+    margin-top: 0.5rem;
+
+    .table > :not(caption) > * > * {
+        background-color: var(--calenar-table-background);
+    }
+
+    thead tr:first-child {
+        th:first-child {
+            border-top-left-radius: 10px; /* Lewy górny róg */
+        }
+
+        th:last-child {
+            border-top-right-radius: 10px; /* Prawy górny róg */
+        }
+    }
+
+    tbody tr:first-child {
+        tr:last-child {
+            td:first-child {
+                border-top-left-radius: 10px; /* Lewy górny róg */
+            }
+
+            td:last-child {
+                border-top-right-radius: 10px; /* Prawy górny róg */
+            }
+        }
+
+        tr {
+            td {
+                width: 14.285714285714285714285714285714%;
+                box-shadow: var(--calendar-shadow);
+            }
+        }
+    }
+
+    thead {
+        th {
+            &.disabled {
+                color: #666;
+            }
+        }
+    }
+}

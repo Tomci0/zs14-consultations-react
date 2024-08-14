@@ -1,0 +1,21 @@
+$theme-color: #019232;
+
+$navbar-br: 0px 0px 15px 15px;
+$navbar-shadow: 1px 1px 7px 1px var(--shadow-color);
+$navbar-btn-shadow: 0px 1px 0px 1px var(--shadow-color);
+$navbar-btn-hover-bg: rgba($theme-color, 0.6);
+
+$navbar-btn-active-bg: $theme-color;
+
+// TOOLTIP
+
+$tooltip-shadow: 1px 1px 8px 2px var(--shadow-color);
+
+// DROPDOWN
+
+$dropdown-border-radius: 5px;
+$dropdown-shadow: 1px 1px 7px 1px var(--shadow-color);
+
+// CALENDAR
+
+$calendar-date-buttons-shadow: -1px 1px 1px 0px var(--shadow-color);
