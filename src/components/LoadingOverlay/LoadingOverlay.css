@@ -1,0 +1,5 @@
+/* Blur effect when loading */
+.content-blurred {
+    filter: blur(4px);
+    pointer-events: none; /* Zablokuj interakcje z elementami podczas ładowania */
+}

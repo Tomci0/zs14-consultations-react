@@ -1,0 +1,14 @@
+@import 'variables';
+
+.tooltip {
+    --bs-tooltip-bg: var(--tooltip-background);
+    --bs-tooltip-color: var(--second-text-color);
+}
+
+.tooltip-inner {
+    box-shadow: $tooltip-shadow;
+    border-radius: 6px;
+    font-size: 0.8rem;
+
+    padding: 0.25rem 0.75rem;
+}

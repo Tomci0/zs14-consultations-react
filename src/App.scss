@@ -32,10 +32,19 @@ body {
     height: 100%;
 }
 
-@import './styles/variables.scss';
+// @import '~bootstrap/scss/bootstrap';
+
 @import './styles/dark.scss';
 @import './styles/light.scss';
 
-@import '~bootstrap/scss/bootstrap';
+@import './styles/_dropdown.scss';
+@import './styles/_card.scss';
+@import './styles/_tooltip.scss';
+@import './styles/modals.scss';
+@import './styles/inputs.scss';
 
-@import './styles/card.scss';
+.blur {
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1 !important;
+}

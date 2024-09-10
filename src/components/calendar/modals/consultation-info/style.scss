@@ -1,0 +1,210 @@
+@import '/src/styles/variables.scss';
+
+.modal {
+    --bs-modal-width: 45rem !important;
+}
+
+#consultation-info,
+#consultation-sign-up {
+    .modal-content {
+        border: none;
+        border-radius: 5px;
+
+        background-color: var(--background);
+        box-shadow: $modal-shadow;
+
+        .modal-header {
+            background: url('./modal-background.avif');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            /* background-attachment: fixed; */
+            height: 100px;
+
+            .btn-close {
+                opacity: 1;
+            }
+
+            .modal-title {
+                color: #fff;
+                font-size: 1.5rem;
+                font-weight: 700;
+                text-shadow: -1px 1px 8px black;
+            }
+        }
+
+        .modal-body {
+            .info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                }
+
+                .label {
+                    color: var(--text-color);
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                }
+
+                .value {
+                    color: var(--text-color);
+                    font-size: 0.8rem;
+                    font-weight: 300;
+                }
+            }
+
+            .title {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.25rem;
+
+                font-weight: 600;
+
+                margin-bottom: 0.5rem;
+            }
+
+            .description-scopes {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+
+                .scopes-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+
+                    .scope {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.25rem;
+
+                        padding: 0.25rem 0.5rem;
+                        border-radius: 5px;
+
+                        background-color: var(--calendar-plate-bg);
+                        color: var(--text-color);
+
+                        font-size: 0.8rem;
+
+                        .iconify {
+                            font-size: 0.4rem;
+                        }
+
+                        &.label {
+                            display: flex;
+                            justify-content: center;
+                            width: 100%;
+
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+
+        .modal-footer {
+            border: none;
+            justify-content: center;
+
+            .btn-modal {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                padding: 0.25rem 0.75rem;
+
+                border: 1.5px solid $theme-color;
+
+                font-size: 0.8rem;
+
+                &:hover {
+                    background-color: $theme-color;
+                    border-color: $theme-color;
+                }
+
+                &.btn-cancel {
+                    border-color: #ef233c;
+
+                    &:hover {
+                        background-color: #ef233c;
+                        border-color: #ef233c;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.signing-form {
+    .select-group {
+        display: flex;
+        flex-direction: column;
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .form-check-input {
+                margin: 0;
+            }
+
+            .form-check-label {
+                color: var(--text-color);
+                font-size: 0.8rem;
+                font-weight: 300;
+            }
+        }
+
+        .form-select,
+        .form-floating {
+            margin-top: 0.5rem;
+            margin-left: 1.25rem;
+        }
+
+        .additional-input {
+            width: 80%;
+            border: none;
+
+            color: var(--text-color);
+
+            box-shadow: none;
+
+            background-color: var(--form-input-background);
+
+            font-size: 0.7rem;
+        }
+
+        input[type='radio'] {
+            appearance: none;
+            background-color: var(--form-input-background);
+            margin: 0;
+            font: inherit;
+            color: var(--text-color);
+            width: 1.15em;
+            height: 1.15em;
+            border: none;
+            border-radius: 0.25rem;
+            box-shadow: none;
+            display: grid;
+            place-content: center;
+            transition: 0.2s;
+
+            &:checked {
+                background-color: $theme-color;
+                --bs-form-check-bg-image: none;
+            }
+        }
+
+        .form-floating > .form-control-plaintext ~ label::after,
+        .form-floating > .form-control:focus ~ label::after,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label::after {
+            background-color: var(--form-input-background);
+        }
+    }
+}

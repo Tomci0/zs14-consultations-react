@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+#verify-account-modal {
+    .modal-content {
+        .modal-body {
+            .pin-input {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                margin-bottom: 1rem;
+
+                .pin-input__container {
+                    background-color: var(--modal-background);
+                    .pin-input__container__input {
+                        width: 4rem;
+                        height: 4.5rem;
+
+                        font-size: 1.8rem;
+                        font-weight: 600;
+
+                        &:focus,
+                        &:active {
+                            border-color: $theme-color;
+                            box-shadow: $theme-color 0px 0px 0px 1px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

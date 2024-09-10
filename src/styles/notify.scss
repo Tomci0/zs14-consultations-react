@@ -1,0 +1,21 @@
+.Toastify__toast {
+    background-color: var(--notification-background);
+    color: var(--text-color);
+
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.Toastify__close-button {
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+/** Used to position the icon **/
+.Toastify__toast-icon {
+    font-size: 1.4rem;
+}
+
+.Toastify__progress-bar--wrp {
+    height: 2.5px;
+}

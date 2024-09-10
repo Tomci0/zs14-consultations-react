@@ -1,29 +1,89 @@
-import React from 'react';
+import { useState } from 'react';
 import './main.scss';
+
+import { Icon } from '@iconify/react';
+import { useMediaQuery } from 'react-responsive';
 
 import NavItem from './nav-item';
 import User from './user';
 import Logo from './logo';
 import Navigation from './navigation';
 
+import MobileNavigation from './mobile-navigation';
+import MobileNavItem from './mobile-nav-item';
+import UserMobile from './user-mobile';
+
 import IHeader from '../../types/header.type';
 
-export default function Header({ name, image, isTeacher, isAdmin, active }: IHeader) {
+import { Mobile, Desktop } from '../../constants/functions';
+import AuthButton from './AuthButton';
+
+export default function Header({ userData, active, isLogged, setIsLogged }: IHeader) {
+    const [collapsed, setCollapsed] = useState<boolean>(false);
+
     return (
-        <div id="navbar">
-            <Logo />
+        <>
+            <div id="navbar">
+                <Logo />
 
-            <Navigation>
-                <NavItem icon="mdi:home" name="Strona Główna" href="/" active={active === '/'} />
-                <NavItem
-                    icon="mdi:calendar"
-                    name="Kalendarz Konsultacji"
-                    href="/calendar"
-                    active={active === '/calendar'}
-                />
-            </Navigation>
+                <Desktop>
+                    <Navigation>
+                        <NavItem icon="mdi:home" name="Strona Główna" href="/" active={active === '/'} />
+                        <NavItem
+                            icon="mdi:calendar"
+                            name="Kalendarz Konsultacji"
+                            href="/calendar"
+                            active={active === '/calendar'}
+                        />
 
-            <User name={name} image={image} isTeacher={isTeacher} isAdmin={isAdmin} />
-        </div>
+                        {userData.isLogged ? (
+                            <NavItem
+                                icon="mdi:chair-school"
+                                name="Twoje Konsultacje"
+                                href="/consultations"
+                                active={active === '/consultations'}
+                            />
+                        ) : (
+                            ''
+                        )}
+                    </Navigation>
+                </Desktop>
+
+                <Mobile>
+                    <a className="link-body-emphasis text-decoration-none" onClick={() => setCollapsed(!collapsed)}>
+                        <Icon icon={!collapsed ? 'mdi:menu' : 'mdi:close'} />
+                    </a>
+                    <MobileNavigation collapsed={collapsed}>
+                        <MobileNavItem icon="mdi:home" name="Strona Główna" href="/" active={active === '/'} />
+                        <MobileNavItem
+                            icon="mdi:calendar"
+                            name="Kalendarz Konsultacji"
+                            href="/calendar"
+                            active={active === '/calendar'}
+                        />
+                        {userData.isLogged ? (
+                            <MobileNavItem
+                                icon="mdi:chair-school"
+                                name="Twoje Konsultacje"
+                                href="/consultations"
+                                active={active === '/consultations'}
+                            />
+                        ) : (
+                            ''
+                        )}
+
+                        <UserMobile userData={userData} />
+                    </MobileNavigation>
+                </Mobile>
+
+                {userData.isLogged ? (
+                    <User userData={userData} setIsLogged={setIsLogged} />
+                ) : (
+                    <AuthButton setIsLogged={setIsLogged} />
+                )}
+
+                {/* <User name={name} image={image} isTeacher={isTeacher} isAdmin={isAdmin} /> */}
+            </div>
+        </>
     );
 }

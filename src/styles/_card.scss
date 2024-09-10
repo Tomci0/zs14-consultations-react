@@ -1,5 +1,6 @@
 .card {
     background-color: var(--card-background);
+    // border: none;
 
     .card-header {
         background-color: var(--background);
@@ -7,6 +8,7 @@
         display: flex;
         align-items: center;
         gap: 0.25rem;
+        border: none;
 
         font-size: 0.8rem;
 

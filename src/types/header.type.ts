@@ -1,10 +1,12 @@
-export default interface IHeader {
-    name: string;
-    image?: string;
-    isTeacher?: boolean;
-    isClassTeacher?: boolean;
-    isAdmin?: boolean;
-    class?: string;
+import IUser from './user.type';
 
+export default interface IHeader {
+    userData:
+        | IUser
+        | {
+              isLogged: boolean;
+          };
     active: string;
+    isLogged: boolean;
+    setIsLogged: (show: boolean) => void;
 }

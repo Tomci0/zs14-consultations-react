@@ -15,7 +15,7 @@
         justify-self: center;
         align-items: center;
 
-        background-color: #303030;
+        background-color: var(--calenar-table-background);
         border-radius: 50%;
         padding: 2px 2.5px;
 
@@ -28,8 +28,16 @@
             font-size: 1.5rem;
         }
 
-        &:hover {
+        &:hover:not(.disabled) {
             background-color: $theme-color;
+        }
+
+        &.disabled {
+            cursor: not-allowed;
+
+            .iconify {
+                color: var(--disabled-text-color);
+            }
         }
     }
 
@@ -37,6 +45,14 @@
         display: flex;
         justify-content: center;
         gap: 0.25rem;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+
+        &:hover {
+            color: $theme-color;
+        }
     }
 }
 
@@ -49,6 +65,15 @@
 
     .table > :not(caption) > * > * {
         background-color: var(--calenar-table-background);
+    }
+
+    .table {
+        table-layout: fixed;
+    }
+
+    th,
+    td {
+        border: none;
     }
 
     thead tr:first-child {
@@ -71,12 +96,13 @@
                 border-top-right-radius: 10px; /* Prawy górny róg */
             }
         }
+    }
 
-        tr {
-            td {
-                width: 14.285714285714285714285714285714%;
-                box-shadow: var(--calendar-shadow);
-            }
+    tr {
+        td {
+            width: 14.285714285714285714285714285714%;
+            max-width: 14.285714285714285714285714285714%;
+            box-shadow: var(--calendar-shadow);
         }
     }
 
@@ -87,4 +113,154 @@
             }
         }
     }
+
+    .day-month {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 25px;
+
+        margin-bottom: 0.5rem;
+
+        span {
+            font-size: 1rem;
+        }
+
+        .day {
+            position: absolute;
+            border-radius: 5px;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+
+            &.active {
+                background-color: $theme-color;
+                color: #fff;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .plate-list {
+        display: flex;
+        flex-direction: column;
+
+        gap: 10px;
+        font-size: 11px;
+
+        .value {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            margin-left: 0.25rem;
+
+            .item {
+                display: flex;
+                justify-content: center;
+                gap: 0.15rem;
+            }
+        }
+
+        .collapse,
+        .collapsing {
+            .plate {
+                margin-left: 0.5rem;
+            }
+        }
+
+        .collapse-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .plate {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            border: none;
+            border-left: solid 4px transparent;
+            padding: 5px;
+            line-height: 12px;
+            cursor: pointer;
+            box-shadow: $calendar-plate-shadow;
+
+            border-radius: 5px;
+
+            background: var(--calendar-plate-bg);
+
+            color: inherit;
+            text-decoration: none;
+
+            transition: 0.2s;
+
+            .time {
+                font-weight: 600;
+            }
+
+            .collapse {
+                background-color: var(--calendar-plate-hover-bg) !important;
+            }
+
+            &:hover {
+                background-color: var(--calendar-plate-hover-bg);
+            }
+
+            // BORDER COLORS
+
+            &.green {
+                border-color: #3b933f;
+            }
+
+            &.red {
+                border-color: #d9534f;
+            }
+
+            &.blue {
+                border-color: #428bca;
+            }
+
+            &.yellow {
+                border-color: #f0ad4e;
+            }
+
+            &.purple {
+                border-color: #9b59b6;
+            }
+
+            &.turquoise {
+                border-color: #1abc9c;
+            }
+
+            &.orange {
+                border-color: #f39c12;
+            }
+
+            &.brown {
+                border-color: #a52a2a;
+            }
+        }
+    }
+}
+
+.calendar-transition-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+.calendar-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+.calendar-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+.calendar-transition-exit-active {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 300ms, transform 300ms;
 }

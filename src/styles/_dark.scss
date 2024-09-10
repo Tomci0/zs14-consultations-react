@@ -1,33 +1,57 @@
 [data-bs-theme='dark'] {
     // GENERAL
 
-    --text-color: #fff;
+    --text-color: rgba(248, 248, 248, 0.8);
+    --disabled-text-color: rgba(255, 255, 255, 0.5);
     --shadow-color: rgba(0, 0, 0, 37%);
+    --second-text-color: rgba(248, 248, 248, 0.8);
 
     --background: #121212;
+    --second-background: #202020;
+    --third-background: #303030;
 
-    --elements-background: rgba(18, 18, 18, 0.902);
+    --elements-background: #121212;
 
     // NAVBAR
-    // --navbar-background: rgba(8, 2, 2, 0.902);
-    --navbar-background: var(--elements-background);
 
-    --navbar-btn-color: rgba(48, 48, 48, 0.9);
+    --navbar-text-color: #fff;
+    --navbar-background: #121212;
+
+    --navbar-btn-color: rgba(48, 48, 48, 0.902);
 
     // DROPDOWN
 
-    --dropdown-background: var(--elements-background);
+    --dropdown-background: var(--second-background);
     --dropdown-text-hover: #019232;
+    --dropdown-divider-color: rgba(255, 255, 255, 0.15);
 
     // TOOLTIP
 
-    --tooltip-background: var(--elements-background);
+    --tooltip-background: var(--second-background);
 
     // CARD
 
-    --card-background: var(--elements-background);
+    --card-background: #121212;
 
     // CALENDAR
 
     --calenar-table-background: rgb(32, 32, 32);
+    --calendar-plate-bg: #232323;
+
+    --calendar-plate-hover-bg: rgba(59, 147, 63, 0.7);
+
+    // MOBILE NAVIGATION
+
+    --mobile-nav-background: rgb(32, 32, 32);
+    --mobile-nav-item-background: #232323;
+
+    // MODAL
+
+    // FORM INPUT
+
+    --form-input-background: #232323;
+
+    // NOTIFICATION
+
+    --notification-background: #232323;
 }

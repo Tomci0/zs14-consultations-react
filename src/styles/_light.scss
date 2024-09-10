@@ -1,9 +1,56 @@
 [data-bs-theme='light'] {
     // GENERAL
 
-    --text-color: #fff;
+    --text-color: #121212;
+    --disabled-text-color: #696969;
+    --shadow-color: rgba(0, 0, 0, 37%);
+    --second-text-color: rgba(255, 255, 255, 0.8);
+
+    --background: #f5f5f5;
+    --second-background: #e0e0e0;
+
+    --elements-background: #f5f5f5;
 
     // NAVBAR
-    --navbar-background: rgba(35, 35, 35, 0.9);
-    --shadow-color: rgba(0, 0, 0, 0.5);
+
+    --navbar-text-color: #fff;
+    --navbar-background: #121212;
+
+    --navbar-btn-color: rgba(48, 48, 48, 0.9);
+
+    // DROPDOWN
+
+    --dropdown-background: #202020;
+    --dropdown-text-hover: #019232;
+    --dropdown-divider-color: rgba(255, 255, 255, 0.15);
+
+    // TOOLTIP
+
+    --tooltip-background: #202020;
+
+    // CARD
+
+    --card-background: var(--elements-background);
+
+    // CALENDAR
+
+    --calenar-table-background: #e8e8e8;
+    --calendar-plate-bg: var(--second-background);
+
+    --calendar-plate-hover-bg: rgba(59, 147, 63, 0.7);
+
+    // MOBILE NAVIGATION
+
+    --mobile-nav-background: #e8e8e8;
+    --mobile-nav-item-background: var(--second-background);
+
+    // MODAL
+
+    // FORM INPUT
+
+    --form-input-background: var(--second-background);
+
+    // NOTIFICATION
+
+    --notification-background: var(--second-background);
 }

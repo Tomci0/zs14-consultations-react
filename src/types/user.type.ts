@@ -1,8 +1,9 @@
 export default interface IUser {
-    name: string;
+    name?: string;
     image?: string;
     isTeacher?: boolean;
     isClassTeacher?: boolean;
     isAdmin?: boolean;
     class?: string;
+    isLogged?: boolean;
 }

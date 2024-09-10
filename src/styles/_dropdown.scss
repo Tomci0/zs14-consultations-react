@@ -1,0 +1,51 @@
+@import 'variables';
+
+.dropdown-toggle {
+    --bs-btn-color: var(--navbar-text-color);
+}
+
+.dropdown-menu {
+    --bs-dropdown-color: var(--second-text-color);
+    color: var(--second-text-color);
+    background-color: var(--dropdown-background);
+    border-radius: $dropdown-border-radius;
+    box-shadow: $dropdown-shadow;
+    border: none;
+
+    padding: 0;
+    margin: 0;
+
+    overflow: hidden;
+
+    .dropdown-divider {
+        border-color: var(--dropdown-divider-color);
+    }
+
+    .dropdown-item {
+        --bs-dropdown-link-color: var(--second-text-color);
+        padding: 0.3rem 1rem;
+        width: 100%;
+        font-size: 0.9em;
+        font-weight: 400;
+        transition: 0.2s;
+
+        display: flex;
+        align-items: center;
+
+        gap: 0.5em;
+
+        &:hover {
+            color: var(--text-color);
+            background-color: $theme-color;
+        }
+
+        .icon {
+            font-size: 1.1em;
+        }
+
+        .name {
+            font-size: 0.9em;
+            font-weight: 300;
+        }
+    }
+}

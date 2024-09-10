@@ -18,9 +18,14 @@ const getPreferredTheme = () => {
     return defaultTheme;
 };
 
+export function getTheme() {
+    if (IS_SERVER) return getDefaultTheme();
+    return document.body.dataset.bsTheme || getPreferredTheme();
+}
+
 export function setTheme(theme: string) {
     if (IS_SERVER) return;
-    document.documentElement.dataset.bsTheme = theme;
+    document.body.dataset.bsTheme = theme;
     localStorage.setItem('theme', theme);
 }
 
@@ -31,7 +36,7 @@ export function resetTheme() {
 
 export function toggleTheme() {
     if (IS_SERVER) return;
-    const nextTheme = document.documentElement.dataset.bsTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+    const nextTheme = document.body.dataset.bsTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
     setTheme(nextTheme);
 }
 

@@ -1,5 +1,11 @@
 @import '../../styles/variables.scss';
 
+.dropdown-toggle::after {
+    // display: none !important;
+
+    margin-top: 0.25em;
+}
+
 #navbar {
     display: flex;
     flex-wrap: wrap;
@@ -29,7 +35,7 @@
             gap: 1em;
 
             .nav-link {
-                color: var(--text-color) !important;
+                color: var(--navbar-text-color) !important;
 
                 box-shadow: $navbar-btn-shadow;
 
@@ -53,10 +59,26 @@
         width: 20%;
 
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
+
+        padding-right: 2rem;
+
+        .login-btn {
+            color: var(--navbar-text-color);
+            font-size: 0.8rem;
+            font-weight: 400;
+            border: 1px solid $theme-color;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+
+            .iconify {
+                margin-top: 0.1rem;
+            }
+        }
 
         #theme-toggle {
-            color: var(--text-color);
+            color: var(--navbar-text-color);
             font-size: 1em;
             transition: 0.2s;
 
@@ -74,15 +96,15 @@
                 margin-right: 0.25rem;
 
                 img {
-                    width: 32px;
-                    height: 32px;
+                    width: 28px;
+                    height: 28px;
                     box-shadow: var(--user-image-shadow);
                     margin-right: 0.25rem;
                 }
             }
 
             #name {
-                color: var(--text-color);
+                color: var(--navbar-text-color);
 
                 font-weight: 300;
                 font-size: 0.8em;
@@ -98,64 +120,79 @@
     }
 }
 
-.tooltip {
-    --bs-tooltip-bg: var(--tooltip-background);
-    --bs-tooltip-color: var(--text-color);
-}
-
-// .tooltip-arrow {
-//     color: var(--tooltip-background);
-// }
-
-.tooltip-inner {
-    box-shadow: $tooltip-shadow;
-    border-radius: 6px;
-    backdrop-filter: blur(10px);
-    font-size: 0.8rem;
-
-    padding: 0.25rem 0.75rem;
-}
-
-// DROPDOWN
-
-.dropdown-menu {
-    color: var(--text-color);
-    background-color: var(--dropdown-background);
-    border-radius: $dropdown-border-radius;
-    box-shadow: $dropdown-shadow;
-    border: none;
-
-    padding: 0;
-    margin: 0;
-
-    overflow: hidden;
-}
-
-.dropdown-menu .dropdown-item {
-    padding: 0.3rem 1rem;
+.mobile-navigation {
+    order: 4;
     width: 100%;
-    font-size: 0.9em;
-    font-weight: 400;
-    transition: 0.2s;
 
-    display: flex;
-    align-items: center;
+    // margin-top: 1rem;
 
-    gap: 0.5em;
-}
+    .navigation-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-/* dropdovn item on hover */
+        gap: 0.5rem;
 
-.dropdown-menu .dropdown-item:hover {
-    color: var(--text-color);
-    background-color: $theme-color;
-}
+        padding: 0.75rem;
 
-.dropdown-menu .dropdown-item .icon {
-    font-size: 1.1em;
-}
+        margin-top: 1rem;
 
-.dropdown-menu .dropdown-item .name {
-    font-size: 0.9em;
-    font-weight: 300;
+        border-radius: 5px;
+        background-color: var(--mobile-nav-background);
+
+        .dropdown-center {
+            width: 100%;
+        }
+
+        .nav-item {
+            width: 100%;
+            padding: 0.4rem 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            justify-content: center;
+
+            border-radius: 5px;
+
+            color: var(--navbar-text-color);
+
+            background-color: var(--mobile-nav-item-background);
+
+            box-shadow: $navbar-shadow;
+
+            text-emphasis: none;
+            text-decoration: none;
+
+            .title {
+                font-size: 0.8rem;
+                font-weight: 300;
+            }
+
+            .icon {
+                font-size: 0.9rem;
+            }
+
+            &.active {
+                background-color: $theme-color;
+                color: #fff;
+            }
+
+            &.user {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                img {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                }
+
+                .name {
+                    font-size: 0.8rem;
+                    font-weight: 300;
+                }
+            }
+        }
+    }
 }

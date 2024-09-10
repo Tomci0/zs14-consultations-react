@@ -7,16 +7,60 @@ import { Icon } from '@iconify/react';
 
 import Datepicker from './datepicker';
 
+import Week from './week';
+import Day from './day';
+
+import IConsultation from '../../types/consultation.type';
+import getConsultations from '../../api/getConsultations';
+
 export default function Calendar() {
-    const [date, setDate] = useState(new Date());
+    const [schoolYear, setSchoolYear] = useState({
+        start: new Date('2024-09-02'),
+        end: new Date('2025-06-20'),
+    });
+    const [date, setDate]: [Date, (date: Date) => void] = useState<Date>(
+        (new Date() < schoolYear.start && schoolYear.start) ||
+            (new Date() > schoolYear.end && schoolYear.end) ||
+            new Date()
+    );
 
     const days = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Nie'];
 
+    const [consultationList, setConsultationList] = useState<IConsultation[] | boolean | undefined>();
+
     useEffect(() => {
-        const [year, month] = [date.getFullYear(), date.getMonth()];
-        const daysTable = getDaysTable(year, month);
-        console.log(daysTable);
+        const api = async () => {
+            const min_date = new Date(date.getFullYear(), date.getMonth(), 1);
+            const max_date = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            try {
+                const consultations: IConsultation[] = await getConsultations({
+                    min_date,
+                    max_date,
+                });
+
+                setConsultationList(consultations);
+            } catch (error) {
+                console.log(error);
+                return;
+            }
+        };
+
+        api();
     }, [date]);
+
+    if (consultationList === undefined) {
+        return (
+            <Card>
+                <Card.Header>
+                    <Icon className="icon" icon="mdi:calendar" />
+                    <div className="title">Kalendarz Konsultacji</div>
+                </Card.Header>
+                <Card.Body>
+                    <div className="loading">Ładowanie...</div>
+                </Card.Body>
+            </Card>
+        );
+    }
 
     return (
         <Card>
@@ -25,7 +69,7 @@ export default function Calendar() {
                 <div className="title">Kalendarz Konsultacji</div>
             </Card.Header>
             <Card.Body>
-                <Datepicker date={date} setDate={setDate} />
+                <Datepicker date={date} setDate={setDate} schoolYear={schoolYear} />
 
                 <div id="calendar">
                     <div className="table-responsive">
@@ -33,11 +77,7 @@ export default function Calendar() {
                             <thead>
                                 <tr className="table-header">
                                     {days.map((day, index) => (
-                                        <th
-                                            scope="col"
-                                            className={'text-center ' + (index > 4 ? 'disabled' : '')}
-                                            key={index}
-                                        >
+                                        <th scope="col" className={'text-center ' + (index > 4 ? 'disabled' : '')}>
                                             {day}.
                                         </th>
                                     ))}
@@ -45,13 +85,21 @@ export default function Calendar() {
                             </thead>
                             <tbody>
                                 {getDaysTable(date.getFullYear(), date.getMonth()).map((week, index) => (
-                                    <tr key={index}>
+                                    <Week>
                                         {week.map((day, index) => (
-                                            <td key={index} className={day ? 'text-center' : 'disabled'}>
-                                                {day}
-                                            </td>
+                                            <Day
+                                                date={new Date(date.getFullYear(), date.getMonth(), Number(day))}
+                                                day={day}
+                                                plateList={
+                                                    consultationList
+                                                        ? (consultationList as IConsultation[]).filter(
+                                                              (consultation) => consultation.date.getDate() === day
+                                                          )
+                                                        : false
+                                                }
+                                            />
                                         ))}
-                                    </tr>
+                                    </Week>
                                 ))}
                             </tbody>
                         </table>
@@ -83,5 +131,3 @@ function getDaysTable(year: number, month: number): (number | false)[][] {
 
     return weeks;
 }
-
-const setCalendar = (date: Date): void => {};

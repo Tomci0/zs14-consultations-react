@@ -13,14 +13,6 @@ const user = {
 export default function App() {
     return (
         <div className={'App container'}>
-            <Header
-                name={user.name}
-                image={user.image}
-                isTeacher={user.isTeacher}
-                isAdmin={user.isAdmin}
-                active={window.location.pathname}
-            />
-
             <Calendar />
         </div>
     );

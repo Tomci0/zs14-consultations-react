@@ -1,0 +1,71 @@
+@import '../../styles/variables';
+
+#month-picker {
+    user-select: none;
+    --bs-popover-bg: var(--calendar-plate-bg);
+    border: none;
+    box-shadow: $month-picker-shadow;
+    max-width: none;
+
+    .current-year {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+
+        font-size: 1rem;
+        color: var(--text-color);
+
+        margin-bottom: 0.5rem;
+
+        .prev,
+        .next {
+            cursor: pointer;
+            color: var(--text-color);
+            transition: 0.2s;
+
+            &:hover:not(.disabled) {
+                color: $theme-color;
+            }
+
+            &.disabled {
+                cursor: not-allowed;
+                color: var(--disabled-text-color);
+            }
+        }
+    }
+
+    .months {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+
+        .month {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+
+            background-color: var(--calendar-plate-bg);
+            color: var(--text-color);
+
+            &:hover:not(.disabled) {
+                background-color: var(--calendar-plate-hover-bg);
+            }
+
+            &.active {
+                background-color: $theme-color;
+                color: #fff;
+            }
+
+            &.disabled {
+                cursor: not-allowed;
+                color: var(--disabled-text-color);
+            }
+        }
+    }
+}
