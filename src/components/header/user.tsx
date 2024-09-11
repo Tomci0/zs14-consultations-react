@@ -8,23 +8,16 @@ import { Icon } from '@iconify/react';
 
 import ThemeChanger from '../theme-changer';
 import AuthenticationCard from './AuthenticationCard';
-import logout from '../../api/logout';
 import { notify, updateNotify } from '../../lib/notifications';
 
-export default function User({ userData, setIsLogged }: { userData: IUser; setIsLogged: (show: boolean) => void }) {
+import useAuth from '../../services/useAuth';
+
+export default function User() {
+    const { logout, user } = useAuth();
     function handleLogout(ev: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-        async function api() {
-            const toastId = notify('Wylogowywanie...');
-            const response: any = await logout();
+        ev.preventDefault();
 
-            if (response?.success) {
-                setIsLogged(true);
-                updateNotify(toastId, 'Wylogowano pomyślnie.', false, { type: 'success' });
-                setIsLogged(false);
-            }
-        }
-
-        api();
+        logout();
     }
 
     return (
@@ -39,10 +32,10 @@ export default function User({ userData, setIsLogged }: { userData: IUser; setIs
                     data-bs-offset="-35, 35"
                 >
                     <span id="image">
-                        <img src={userData.image} className="img rounded-circle" alt="user-logo" />
+                        <img src={user.image} className="img rounded-circle" alt="user-logo" />
                     </span>
                     <span id="name" className="d-none d-lg-inline">
-                        {userData.name}
+                        {user.name}
                     </span>
                 </Dropdown.Toggle>
 
@@ -58,13 +51,13 @@ export default function User({ userData, setIsLogged }: { userData: IUser; setIs
                         ],
                     }}
                 >
-                    {(userData.isAdmin || userData.isTeacher) && (
+                    {(user.isAdmin || user.isTeacher) && (
                         <Dropdown.Item href="#">
                             <Icon icon="mdi:shield-user" />
                             <span className="name">Panel Administratora</span>
                         </Dropdown.Item>
                     )}
-                    {(userData.isTeacher || userData.isAdmin) && <Dropdown.Divider />}
+                    {(user.isTeacher || user.isAdmin) && <Dropdown.Divider />}
                     <li>
                         <a className="dropdown-item" onClick={handleLogout}>
                             <Icon className="icon" icon="mdi:logout" />

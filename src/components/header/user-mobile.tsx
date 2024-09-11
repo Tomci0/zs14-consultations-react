@@ -5,15 +5,18 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import IUser from '../../types/user.type';
 
-export default function UserMobile({ userData }: { userData: IUser }) {
+import useAuth from '../../services/useAuth';
+
+export default function UserMobile() {
+    const { user } = useAuth();
     return (
         <Dropdown as="span" drop={'down-centered'}>
             <Dropdown.Toggle as={'a'} className="nav-item user">
                 <div className="image">
-                    <img className="avatar" src={userData.image} alt="avatar" />
+                    <img className="avatar" src={user.image} alt="avatar" />
                 </div>
                 <div className="info">
-                    <span className="name">{userData.name}</span>
+                    <span className="name">{user.name}</span>
                 </div>
             </Dropdown.Toggle>
 

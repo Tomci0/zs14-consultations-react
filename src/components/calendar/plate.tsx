@@ -6,7 +6,10 @@ import { ETime } from '../../types/enums';
 import ConsultationInfoModal from './modals/consultation-info';
 import IConsultation from '../../types/consultation.type';
 
+import useAuth from '../../services/useAuth';
+
 export default function Plate({ data }: { data: IConsultation }) {
+    const { isLogged } = useAuth();
     const [show, setShow] = useState<boolean>(false);
     function handleClick() {
         setShow(true);
@@ -28,12 +31,7 @@ export default function Plate({ data }: { data: IConsultation }) {
                 </span>
             </div>
 
-            <ConsultationInfoModal
-                show={show}
-                setShow={setShow}
-                consultationData={data}
-                withSign={new Date() < data.date && new Date() < (data.end_signing_up as Date)}
-            />
+            <ConsultationInfoModal show={show} setShow={setShow} consultationData={data} />
         </>
     );
 }

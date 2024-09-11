@@ -1,6 +1,6 @@
 import { notifyPromise, updateNotify } from '../lib/notifications';
 
-export default function unsignFromConsultation(consultationId: number) {
+export default function unsignFromConsultation(consultationId: string) {
     console.log(`Unsigning from consultation with id: ${consultationId}`);
 
     const notifyId = notifyPromise('Odwoływanie zapisu na konsultacje...');

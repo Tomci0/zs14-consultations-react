@@ -8,18 +8,18 @@ import VerifyAccountModal from '../../verify-account';
 import ResetPasswordModal from './ResetPasswordModal';
 import LogIn from '../../../api/logIn';
 
-import { Id } from 'react-toastify';
+import useAuth from '../../../services/useAuth';
 
 import { notify, notifyPromise, updateNotify } from '../../../lib/notifications';
 
-export default function AuthenticationCard({ setIsLogged }: { setIsLogged: (show: boolean) => void }) {
+export default function AuthenticationCard() {
     const [showVerifyAccount, setShowVerifyAccount] = useState<boolean>(false);
     const [showResetPassword, setShowResetPassword] = useState<boolean>(false);
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+
+    const { login } = useAuth();
 
     function onClickSubmit(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         ev.preventDefault();
@@ -31,28 +31,7 @@ export default function AuthenticationCard({ setIsLogged }: { setIsLogged: (show
             return;
         }
 
-        const api = async () => {
-            const toastId = notifyPromise('Logowanie...');
-            const response = await LogIn(email, password);
-
-            if (response?.error) {
-                // notify(response.message, {
-                //     type: 'error',
-                // });
-
-                updateNotify(toastId, response.message, false, { type: 'error' });
-            }
-
-            if (response?.success) {
-                // notify('Zalogowano pomyślnie.', {
-                //     type: 'success',
-                // });
-                updateNotify(toastId, 'Zalogowano pomyślnie.', false, { type: 'success' });
-                setIsLogged(true);
-            }
-        };
-
-        api();
+        login(email, password);
     }
 
     return (

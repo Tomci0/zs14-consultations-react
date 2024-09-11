@@ -7,6 +7,8 @@ import IUser from '../types/user.type';
 import LogIn from '../api/logIn';
 import logoutApi from '../api/logout';
 
+import { notifyPromise, updateNotify } from '../lib/notifications';
+
 interface AuthContextType {
     isLogged: boolean;
     loading: boolean;
@@ -50,24 +52,46 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }, []);
 
     function login(email: string, password: string) {
+        const toastId = notifyPromise('Logowanie...');
         setLoading(true);
 
         // Log in logic
 
         LogIn(email, password)
             .then((response) => {
-                if (response.error) setError(response.error);
-                else {
-                    setUser(response.user);
+                if (response.error) {
+                    updateNotify(toastId, response.error, false, { type: 'error' });
+                    setError(response.error);
+                    setLoading(false);
+                } else {
+                    updateNotify(toastId, 'Zalogowano pomyślnie.', false, { type: 'success' });
+                    setUser(response.data);
                     setIsLogged(true);
+                    setLoading(false);
                 }
             })
             .catch((error) => {})
-            .finally(() => {});
+            .finally(() => {
+                setLoading(false);
+            });
     }
 
     function logout() {
-        logoutApi().then(() => setUser({ isLogged: false }));
+        const toastId = notifyPromise('Wylogowywanie...');
+        logoutApi()
+            .then(() => {
+                updateNotify(toastId, 'Wylogowano pomyślnie.', false, { type: 'success' });
+                setUser({ isLogged: false });
+                setIsLogged(false);
+                return;
+            })
+            .catch((error) => {
+                updateNotify(toastId, 'Błąd podczas wylogowywania.', false, { type: 'error' });
+                setError(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     }
 
     const memoedValue = useMemo(
@@ -82,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
         [user, loading, error]
     );
 
-    return <AuthContext.Provider value={memoedValue}>{!loading && children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>;
 }
 
 export default function useAuth() {

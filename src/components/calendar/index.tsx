@@ -12,8 +12,10 @@ import Day from './day';
 
 import IConsultation from '../../types/consultation.type';
 import getConsultations from '../../api/getConsultations';
+import useAuth from '../../services/useAuth';
 
 export default function Calendar() {
+    const { isLogged } = useAuth();
     const [schoolYear, setSchoolYear] = useState({
         start: new Date('2024-09-02'),
         end: new Date('2025-06-20'),
@@ -46,7 +48,7 @@ export default function Calendar() {
         };
 
         api();
-    }, [date]);
+    }, [date, isLogged]);
 
     if (consultationList === undefined) {
         return (

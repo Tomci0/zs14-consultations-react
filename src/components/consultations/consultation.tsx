@@ -57,13 +57,7 @@ export default function Consultation({ data }: { data: ISignedConsultation }) {
                 </div>
             </div>
 
-            <ConsultationInfoModal
-                show={show}
-                setShow={setShow}
-                consultationData={consultationData}
-                withSign={false}
-                withUnsign={true}
-            />
+            <ConsultationInfoModal show={show} setShow={setShow} consultationData={consultationData} />
         </>
     );
 }

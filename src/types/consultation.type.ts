@@ -4,7 +4,7 @@ import IScope from './scope.types';
 import IUser from './user.type';
 
 export default interface IConsultation {
-    id: number;
+    _id: string;
 
     date: Date;
     time: number;
@@ -21,4 +21,6 @@ export default interface IConsultation {
 
     description?: string;
     scopes?: IScope[];
+
+    isSigned?: boolean;
 }

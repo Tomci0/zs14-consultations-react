@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { Icon } from '@iconify/react';
 import AuthenticationCard from '../AuthenticationCard';
 
-export default function AuthButton({ setIsLogged }: { setIsLogged: (show: boolean) => void }) {
+export default function AuthButton() {
     const [dropped, setDropped] = useState(false);
 
     return (
@@ -31,7 +31,7 @@ export default function AuthButton({ setIsLogged }: { setIsLogged: (show: boolea
                         ],
                     }}
                 >
-                    <AuthenticationCard setIsLogged={setIsLogged} />
+                    <AuthenticationCard />
                 </Dropdown.Menu>
             </Dropdown>
         </div>

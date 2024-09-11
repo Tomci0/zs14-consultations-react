@@ -17,8 +17,10 @@ import IHeader from '../../types/header.type';
 
 import { Mobile, Desktop } from '../../constants/functions';
 import AuthButton from './AuthButton';
+import useAuth from '../../services/useAuth';
 
-export default function Header({ userData, active, isLogged, setIsLogged }: IHeader) {
+export default function Header({ active }: IHeader) {
+    const { user, isLogged } = useAuth();
     const [collapsed, setCollapsed] = useState<boolean>(false);
 
     return (
@@ -36,7 +38,7 @@ export default function Header({ userData, active, isLogged, setIsLogged }: IHea
                             active={active === '/calendar'}
                         />
 
-                        {userData.isLogged ? (
+                        {isLogged ? (
                             <NavItem
                                 icon="mdi:chair-school"
                                 name="Twoje Konsultacje"
@@ -61,7 +63,7 @@ export default function Header({ userData, active, isLogged, setIsLogged }: IHea
                             href="/calendar"
                             active={active === '/calendar'}
                         />
-                        {userData.isLogged ? (
+                        {isLogged ? (
                             <MobileNavItem
                                 icon="mdi:chair-school"
                                 name="Twoje Konsultacje"
@@ -72,15 +74,11 @@ export default function Header({ userData, active, isLogged, setIsLogged }: IHea
                             ''
                         )}
 
-                        <UserMobile userData={userData} />
+                        <UserMobile />
                     </MobileNavigation>
                 </Mobile>
 
-                {userData.isLogged ? (
-                    <User userData={userData} setIsLogged={setIsLogged} />
-                ) : (
-                    <AuthButton setIsLogged={setIsLogged} />
-                )}
+                {isLogged ? <User /> : <AuthButton />}
 
                 {/* <User name={name} image={image} isTeacher={isTeacher} isAdmin={isAdmin} /> */}
             </div>

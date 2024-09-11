@@ -12,49 +12,26 @@ import VerifyAccountModal from './components/verify-account';
 import IUser from './types/user.type';
 import getUser from './api/getCurrentUser';
 import { ToastContainer } from 'react-toastify';
+import useAuth, { AuthProvider } from './services/useAuth';
 
 function Main() {
     const location = useLocation();
-    const [userData, setUserData] = useState<IUser>({});
-    const [authenticated, setAuthenticated] = useState<boolean>(false);
-    const [showVerifyAccount, setShowVerifyAccount] = useState<boolean>(true);
-    const [isLogged, setIsLogged] = useState<boolean>(false);
-
-    useEffect(() => {
-        const api = async () => {
-            try {
-                const user = await getUser();
-                setUserData(user);
-                setAuthenticated(user.isLogged);
-            } catch (error) {
-                console.error('Błąd podczas pobierania danych użytkownika:', error);
-                setAuthenticated(false);
-            }
-        };
-
-        api();
-    }, [isLogged]);
-
-    useEffect(() => {
-        if (userData.isLogged) {
-            setAuthenticated(true);
-        } else {
-            setAuthenticated(false);
-        }
-    }, [userData]);
+    const { user, isLogged } = useAuth();
 
     return (
         <>
             <ToastContainer />
-            <Header userData={userData} active={location.pathname} isLogged={isLogged} setIsLogged={setIsLogged} />
-            <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/calendar" element={<Calendar />} />
+            <AuthProvider>
+                <Header active={location.pathname} />
+                <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/calendar" element={<Calendar />} />
 
-                {authenticated ? <Route path="/consultations" element={<Consultations />} /> : ''}
+                    {isLogged ? <Route path="/consultations" element={<Consultations />} /> : ''}
 
-                <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </AuthProvider>
 
             {/* <VerifyAccountModal show={showVerifyAccount} setShow={setShowVerifyAccount} userCode="123456" /> */}
         </>

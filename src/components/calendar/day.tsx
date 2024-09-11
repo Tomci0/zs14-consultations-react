@@ -15,10 +15,19 @@ export default function Day({
 }) {
     if (typeof plateList !== 'object' || plateList.length === 0) {
         return (
-            <td className="disabled">
+            <td className={day ? 'text-center' : 'disabled'}>
                 <div className="day-month">
-                    <div className="day">
-                        <span> </span>
+                    <div
+                        className={
+                            'day' +
+                            (date.getFullYear() === new Date().getFullYear() &&
+                            date.getMonth() === new Date().getMonth() &&
+                            day === new Date().getDate()
+                                ? ' active'
+                                : '')
+                        }
+                    >
+                        <span>{day}</span>
                     </div>
                 </div>
             </td>

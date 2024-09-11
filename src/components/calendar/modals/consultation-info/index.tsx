@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import IConsultation from '../../../../types/consultation.type';
@@ -14,25 +14,29 @@ import { notify } from '../../../../lib/notifications';
 import signToConsultations from '../../../../api/sign-consultations';
 import unsignFromConsultation from '../../../../api/unsignFromConsultation';
 
+import useAuth from '../../../../services/useAuth';
+
 export default function ConsultationInfoModal({
     show,
     setShow,
     consultationData,
-    withSign = true,
-    withUnsign = false,
 }: {
     show: boolean;
     setShow: (show: boolean) => void;
     consultationData: IConsultation;
-    withSign?: boolean;
-    withUnsign?: boolean;
 }) {
+    const [signButtonDisabled, setSignButtonDisabled] = useState<boolean>(false);
     const [showSign, setShowSign] = useState<boolean>(false);
 
     // FROM VALUES
 
     const [currentOption, setCurrentOption] = useState<string>('');
     const [currentScope, setCurrentScope] = useState<string | number>('');
+
+    const canSign = (consultationData.end_signing_up && new Date() < consultationData.end_signing_up) || false;
+    const canUnsign = new Date() < consultationData.date;
+
+    const { isLogged } = useAuth();
 
     function submitForm() {
         if (!currentOption) {
@@ -49,7 +53,20 @@ export default function ConsultationInfoModal({
             return;
         }
 
-        signToConsultations(consultationData.id, currentOption, currentScope);
+        async function api() {
+            setSignButtonDisabled(true);
+            const response = await signToConsultations(consultationData._id, currentOption, currentScope);
+
+            if (response) {
+                setShowSign(false);
+                setShow(true);
+                setSignButtonDisabled(false);
+            } else {
+                setSignButtonDisabled(false);
+            }
+        }
+
+        api();
     }
 
     return (
@@ -75,7 +92,7 @@ export default function ConsultationInfoModal({
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    {withSign && (
+                    {isLogged && !consultationData.isSigned && canSign && (
                         <Button
                             className="btn-modal"
                             variant="none"
@@ -89,11 +106,11 @@ export default function ConsultationInfoModal({
                         </Button>
                     )}
 
-                    {withUnsign && (
+                    {isLogged && consultationData.isSigned && canUnsign && (
                         <Button
                             className="btn-modal btn-cancel"
                             variant="none"
-                            onClick={() => unsignFromConsultation(consultationData.id)}
+                            onClick={() => unsignFromConsultation(consultationData._id)}
                         >
                             <Icon icon="mdi:pen" />
                             <span className="btn-text">Wypisz się</span>
@@ -102,7 +119,7 @@ export default function ConsultationInfoModal({
                 </Modal.Footer>
             </Modal>
 
-            {withSign && (
+            {isLogged && !consultationData.isSigned && canSign && (
                 <Modal
                     show={showSign}
                     onHide={() => {
@@ -118,7 +135,7 @@ export default function ConsultationInfoModal({
                             <Col>
                                 <Info
                                     data={{
-                                        id: consultationData.id,
+                                        _id: consultationData._id,
                                         date: consultationData.date,
                                         time: consultationData.time,
                                         subject: consultationData.subject,
@@ -150,12 +167,10 @@ export default function ConsultationInfoModal({
                             <span className="btn-text">Wróć</span>
                         </Button>
 
-                        {withSign && (
-                            <Button className="btn-modal" variant="none" onClick={submitForm}>
-                                <Icon icon="mdi:pen" />
-                                <span className="btn-text">Zapisz się</span>
-                            </Button>
-                        )}
+                        <Button className="btn-modal" disabled={signButtonDisabled} variant="none" onClick={submitForm}>
+                            <Icon icon="mdi:pen" />
+                            <span className="btn-text">Zapisz się</span>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             )}
