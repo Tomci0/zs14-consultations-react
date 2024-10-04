@@ -27,7 +27,7 @@ function Main() {
                     <Route path="/" element={<Index />} />
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/consultations" element={<Consultations />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
                 </Routes>
                 {/* </div> */}
             </AuthProvider>
