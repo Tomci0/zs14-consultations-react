@@ -3,8 +3,7 @@
 
     --text-color: #121212;
     --disabled-text-color: #696969;
-    --shadow-color: rgba(0, 0, 0, 37%);
-    --second-text-color: rgba(255, 255, 255, 0.8);
+    --shadow-color: #1212122b;
 
     --background: #f5f5f5;
     --second-background: #e0e0e0;
@@ -13,20 +12,20 @@
 
     // NAVBAR
 
-    --navbar-text-color: #fff;
-    --navbar-background: #121212;
+    --navbar-text-color: var(--text-color);
+    --navbar-background: var(--background);
 
-    --navbar-btn-color: rgba(48, 48, 48, 0.9);
+    --navbar-btn-color: var(--second-background);
 
     // DROPDOWN
 
-    --dropdown-background: #202020;
+    --dropdown-background: var(--second-background);
     --dropdown-text-hover: #019232;
     --dropdown-divider-color: rgba(255, 255, 255, 0.15);
 
     // TOOLTIP
 
-    --tooltip-background: #202020;
+    --tooltip-background: var(--second-background);
 
     // CARD
 

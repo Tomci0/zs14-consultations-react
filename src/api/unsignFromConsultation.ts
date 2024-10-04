@@ -1,23 +1,35 @@
 import { notifyPromise, updateNotify } from '../lib/notifications';
 
-export default function unsignFromConsultation(consultationId: string) {
+import { getApiUrl } from '../constants/functions';
+
+export default async function unsignFromConsultation(consultationId: string) {
     console.log(`Unsigning from consultation with id: ${consultationId}`);
 
     const notifyId = notifyPromise('Odwoływanie zapisu na konsultacje...');
 
-    setTimeout(() => {
-        const oneortwo = Math.floor(Math.random() * 2) + 1;
+    const fetchData = await fetch(getApiUrl('consultations', 'unsign'), {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            consultationId,
+        }),
+    });
 
-        if (oneortwo === 1) {
-            updateNotify(notifyId, 'Pomyślnie wypisałeś się z konsultacji.', false, {
-                type: 'success',
-                progress: undefined,
-            });
-        } else {
-            updateNotify(notifyId, 'Nie udało się wypisać z konsultacji.', false, {
-                type: 'error',
-                progress: undefined,
-            });
-        }
-    }, 3000);
+    const response = await fetchData.json();
+
+    if (response.error) {
+        updateNotify(notifyId, 'Wystąpił błąd. Spróbuj ponownie.', false, {
+            type: 'error',
+        });
+        return false;
+    }
+
+    updateNotify(notifyId, 'Pomyślnie wypisałeś się z konsultacji.', false, {
+        type: 'success',
+    });
+
+    return true;
 }

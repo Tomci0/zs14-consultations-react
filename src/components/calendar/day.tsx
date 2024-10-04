@@ -4,16 +4,26 @@ import PlateList from './platelist';
 import getConsultations from '../../api/getConsultations';
 import IConsultation from '../../types/consultation.type';
 
-export default function Day({
-    date,
-    day,
-    plateList,
-}: {
-    date: Date;
-    day: number | boolean;
-    plateList: IConsultation[] | boolean;
-}) {
-    if (typeof plateList !== 'object' || plateList.length === 0) {
+import useConsultation from '../../services/useConsultations';
+
+export default function Day({ date, day }: { date: Date; day: number | boolean }) {
+    const [plateList, setPlateList] = useState<IConsultation[]>([]);
+    const { consultations } = useConsultation();
+
+    useEffect(() => {
+        if (consultations) {
+            const filteredConsultations = consultations.filter(
+                (consultation) =>
+                    consultation.date.getDate() === date.getDate() &&
+                    consultation.date.getMonth() === date.getMonth() &&
+                    consultation.date.getFullYear() === date.getFullYear()
+            );
+
+            setPlateList(filteredConsultations);
+        }
+    }, [consultations, date]);
+
+    if (typeof consultations !== 'object' || consultations.length === 0) {
         return (
             <td className={day ? 'text-center' : 'disabled'}>
                 <div className="day-month">

@@ -19,7 +19,7 @@ export default function Info({ data }: { data: IConsultation }) {
                         label="Data"
                         value={
                             data.date > new Date()
-                                ? formatDate(data.date) + ' ' + ETime[data.time]
+                                ? formatDate(new Date(data.date)) + ' ' + ETime[data.time]
                                 : 'Ta konsultacja już się odbyła'
                         }
                     />
@@ -70,8 +70,10 @@ export default function Info({ data }: { data: IConsultation }) {
 function Item({ icon, label, value }: { icon: string; label: string; value: string }) {
     return (
         <div className="item">
-            <Icon icon={icon} />
-            <span className="label">{label}:</span>
+            <div className="item-label">
+                <Icon icon={icon} />
+                <span className="label">{label}:</span>
+            </div>
             <span className="value">{value}</span>
         </div>
     );

@@ -5,8 +5,8 @@
 }
 
 .dropdown-menu {
-    --bs-dropdown-color: var(--second-text-color);
-    color: var(--second-text-color);
+    --bs-dropdown-color: var(--text-color);
+    color: var(--text-color);
     background-color: var(--dropdown-background);
     border-radius: $dropdown-border-radius;
     box-shadow: $dropdown-shadow;
@@ -22,7 +22,7 @@
     }
 
     .dropdown-item {
-        --bs-dropdown-link-color: var(--second-text-color);
+        --bs-dropdown-link-color: var(--text-color);
         padding: 0.3rem 1rem;
         width: 100%;
         font-size: 0.9em;
@@ -31,6 +31,8 @@
 
         display: flex;
         align-items: center;
+
+        cursor: pointer;
 
         gap: 0.5em;
 

@@ -5,7 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import $ from 'jquery';
 
-// import './style.scss';
+import './style.scss';
 import LoadingOverlay from '../../../LoadingOverlay/LoadingOverlay';
 import { notify } from '../../../../lib/notifications';
 
@@ -23,7 +23,7 @@ export default function ResetPasswordModal({ show, setShow }: { show: boolean; s
             backdrop={'static'}
             keyboard={false}
             centered
-            id="verify-account-modal"
+            id="reset-password-modal"
         >
             <Modal.Header closeButton>
                 <Modal.Title>Zapomniałeś hasła?</Modal.Title>

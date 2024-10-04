@@ -1,0 +1,34 @@
+@import '../../../../styles/variables';
+
+#login-modal {
+    .buttons {
+        display: flex;
+        gap: 0.5rem;
+
+        justify-content: center;
+
+        .btn {
+            background-color: $theme-color;
+            border: none;
+            box-shadow: none;
+
+            &:hover {
+                background-color: darken($theme-color, 10%);
+            }
+        }
+    }
+
+    .reset-password {
+        display: flex;
+        justify-content: center;
+
+        .btn {
+            color: var(--text-color);
+            text-decoration: none;
+
+            &:hover {
+                color: $theme-color;
+            }
+        }
+    }
+}

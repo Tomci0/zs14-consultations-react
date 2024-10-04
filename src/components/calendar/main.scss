@@ -63,17 +63,16 @@
 
     margin-top: 0.5rem;
 
-    .table > :not(caption) > * > * {
-        background-color: var(--calenar-table-background);
-    }
+    table-layout: fixed;
 
-    .table {
-        table-layout: fixed;
+    @media (max-width: 991px) {
+        width: 350%;
     }
 
     th,
     td {
         border: none;
+        background-color: var(--calenar-table-background);
     }
 
     thead tr:first-child {
@@ -101,7 +100,7 @@
     tr {
         td {
             width: 14.285714285714285714285714285714%;
-            max-width: 14.285714285714285714285714285714%;
+            // max-width: 14.285714285714285714285714285714%;
             box-shadow: var(--calendar-shadow);
         }
     }

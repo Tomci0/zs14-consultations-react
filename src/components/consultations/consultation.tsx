@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import { ETime, EBuilding } from '../../types/enums';
+import { ETime } from '../../types/enums';
 
 import { Icon } from '@iconify/react';
 
 import { ISignedConsultation } from '../../api/getUserConsultations';
-import getConsultations from '../../api/getConsultations';
 import { formatDate } from '../../lib/formatter';
 
 import ConsultationInfoModal from '../calendar/modals/consultation-info';
@@ -13,26 +12,7 @@ import IConsultation from '../../types/consultation.type';
 
 export default function Consultation({ data }: { data: ISignedConsultation }) {
     const [show, setShow] = useState<boolean>(false);
-    const [consultationData, setConsultationData] = useState<IConsultation | undefined>();
-
-    useEffect(() => {
-        const api = async () => {
-            try {
-                const consultation = await getConsultations({ id: data.id });
-
-                if (consultation.length === 0) {
-                    return;
-                }
-
-                setConsultationData(consultation[0]);
-            } catch (error) {
-                console.error('Błąd podczas pobierania danych użytkownika:', error);
-                return;
-            }
-        };
-
-        api();
-    }, [data.id]);
+    const [consultationData, setConsultationData] = useState<any>(data.consultation as IConsultation);
 
     if (!consultationData) {
         return <></>;
@@ -47,7 +27,9 @@ export default function Consultation({ data }: { data: ISignedConsultation }) {
                     </div>
                     <div className="consultation-item__header__date">
                         <Icon icon="mdi:clock" />
-                        {formatDate(consultationData.date)} {ETime[consultationData.time]}
+                        <span className="consultation-item__header__date__text">
+                            {formatDate(new Date(consultationData.date))} {ETime[consultationData.time]}
+                        </span>
                     </div>
                 </div>
                 <div className="consultation-item__content">
@@ -57,7 +39,12 @@ export default function Consultation({ data }: { data: ISignedConsultation }) {
                 </div>
             </div>
 
-            <ConsultationInfoModal show={show} setShow={setShow} consultationData={consultationData} />
+            <ConsultationInfoModal
+                show={show}
+                setShow={setShow}
+                consultationData={consultationData}
+                hideButton={true}
+            />
         </>
     );
 }

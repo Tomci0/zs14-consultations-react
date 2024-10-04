@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../../styles/variables';
 
 #verify-account-modal {
     .modal-content {
@@ -13,7 +13,14 @@
                 .pin-input__container {
                     background-color: var(--modal-background);
                     .pin-input__container__input {
-                        width: 4rem;
+                        @media (max-width: 991px) {
+                            width: 100%;
+                        }
+
+                        @media (min-width: 992px) {
+                            width: 4rem;
+                        }
+
                         height: 4.5rem;
 
                         font-size: 1.8rem;

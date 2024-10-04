@@ -1,39 +1,80 @@
 import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import IConsultation from '../types/consultation.type';
 
-interface AuthContextType {
-    consultations: IConsultation[] | boolean | undefined;
-    signingModalShow: boolean;
-    consultationModalShow: boolean;
-    setConsultations: (consultations: IConsultation[] | boolean | undefined) => void;
-    setSigningModalShow: (show: boolean) => void;
-    setConsultationModalShow: (show: boolean) => void;
+import getConsultations from '../api/getConsultations';
+
+interface consultationContextType {
+    consultations: IConsultation[];
+    loading: boolean;
+    error?: any;
+    setConsultations: (min_date: Date, max_date: Date) => void;
+    refreshConsultations: () => void;
 }
 
-const ConsultationContext = createContext<AuthContextType>({
-    consultations: undefined,
-    signingModalShow: false,
-    consultationModalShow: false,
+const ConsultationContext = createContext<consultationContextType>({
+    consultations: [],
+    loading: false,
     setConsultations: () => {},
-    setSigningModalShow: () => {},
-    setConsultationModalShow: () => {},
+    refreshConsultations: () => {},
 });
 
 export function ConsultationProvider({ children }: { children: ReactNode }): JSX.Element {
-    const [consultations, setConsultations] = useState<IConsultation[] | boolean | undefined>();
-    const [signingModalShow, setSigningModalShow] = useState<boolean>(false);
-    const [consultationModalShow, setConsultationModalShow] = useState<boolean>(false);
+    const [consultations, setConsultationsData] = useState<IConsultation[]>([]);
+    const [error, setError] = useState<any>(undefined);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [consultationsRange, setConsultationsRange] = useState<{ min_date: Date; max_date: Date }>({
+        min_date: new Date(),
+        max_date: new Date(),
+    });
+
+    const [showSignModal, setShowSignModal] = useState<boolean>(false);
+    const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if (error) setError(undefined);
+    }, [location.pathname]);
+
+    function setConsultations(min_date: Date, max_date: Date) {
+        setLoading(true);
+        setConsultationsRange({ min_date, max_date });
+        getConsultations({ min_date, max_date })
+            .then((data) => {
+                setConsultationsData(data);
+            })
+            .catch((error) => {
+                setError(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
+
+    function refreshConsultations() {
+        setLoading(true);
+        getConsultations(consultationsRange)
+            .then((data) => {
+                setConsultationsData(data);
+            })
+            .catch((error) => {
+                setError(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
 
     return (
         <ConsultationContext.Provider
             value={{
                 consultations,
+                loading,
+                error,
                 setConsultations,
-                signingModalShow,
-                setSigningModalShow,
-                consultationModalShow,
-                setConsultationModalShow,
+                refreshConsultations,
             }}
         >
             {children}
@@ -41,12 +82,6 @@ export function ConsultationProvider({ children }: { children: ReactNode }): JSX
     );
 }
 
-export default function useConsultation() {
-    const context = useContext(ConsultationContext);
-
-    if (!context) {
-        throw new Error('useConsultation must be used within a ConsultationProvider');
-    }
-
-    return context;
+export default function useConsultations() {
+    return useContext(ConsultationContext);
 }

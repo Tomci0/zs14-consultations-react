@@ -5,6 +5,10 @@ import INavItem from '../../types/nav-item.type';
 import { NavLink } from 'react-router-dom';
 
 export default function NavItem({ icon, name, href, active }: INavItem) {
+    if (!href) {
+        return <></>;
+    }
+
     return (
         <li className="nav-item">
             <OverlayTrigger

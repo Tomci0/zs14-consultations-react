@@ -1,0 +1,24 @@
+@import '../../../../styles/variables';
+
+#create-account-modal {
+    .modal-body {
+        padding: 2rem;
+
+        .buttons {
+            display: flex;
+            gap: 0.5rem;
+
+            justify-content: center;
+
+            .btn {
+                background-color: $theme-color;
+                border: none;
+                box-shadow: none;
+
+                &:hover {
+                    background-color: darken($theme-color, 10%);
+                }
+            }
+        }
+    }
+}

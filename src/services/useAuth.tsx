@@ -8,13 +8,15 @@ import LogIn from '../api/logIn';
 import logoutApi from '../api/logout';
 
 import { notifyPromise, updateNotify } from '../lib/notifications';
+import { toast } from 'react-toastify';
+import { getApiUrl } from '../constants/functions';
 
 interface AuthContextType {
     isLogged: boolean;
     loading: boolean;
     error?: any;
     user: IUser;
-    login: (email: string, password: string) => void;
+    login: (email: string, password: string) => Promise<any>;
     logout: () => void;
 }
 
@@ -22,12 +24,12 @@ const AuthContext = createContext<AuthContextType>({
     user: { isLogged: false },
     isLogged: false,
     loading: false,
-    login: () => {},
+    login: () => Promise.resolve({}),
     logout: () => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }): JSX.Element {
-    const [user, setUser] = useState<IUser>({ isLogged: false });
+    const [user, setUser] = useState<IUser>({});
     const [isLogged, setIsLogged] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<any>(undefined);
@@ -51,29 +53,38 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
             });
     }, []);
 
-    function login(email: string, password: string) {
-        const toastId = notifyPromise('Logowanie...');
+    async function login(email: string, password: string) {
         setLoading(true);
+        const toastId = notifyPromise('Logowanie...');
 
-        // Log in logic
+        // const response = await LogIn(email, password);
 
-        LogIn(email, password)
-            .then((response) => {
-                if (response.error) {
-                    updateNotify(toastId, response.error, false, { type: 'error' });
-                    setError(response.error);
-                    setLoading(false);
-                } else {
-                    updateNotify(toastId, 'Zalogowano pomyślnie.', false, { type: 'success' });
-                    setUser(response.data);
-                    setIsLogged(true);
-                    setLoading(false);
-                }
-            })
-            .catch((error) => {})
-            .finally(() => {
-                setLoading(false);
-            });
+        const data = await fetch(getApiUrl('auth', 'login'), {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: email,
+                password: password,
+            }),
+        });
+
+        const response = await data.json();
+
+        if (response.error) {
+            updateNotify(toastId, response.message, false, { type: 'error' });
+            setError(response.error);
+            setLoading(false);
+        } else {
+            updateNotify(toastId, 'Zalogowano pomyślnie.', false, { type: 'success' });
+            setUser(response.data);
+            setIsLogged(true);
+            setLoading(false);
+        }
+
+        return response;
     }
 
     function logout() {
@@ -103,7 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
             login,
             logout,
         }),
-        [user, loading, error]
+        [user, isLogged, loading, error]
     );
 
     return <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>;

@@ -1,31 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Modal from 'react-bootstrap/Modal';
-import Spinner from 'react-bootstrap/Spinner';
 
 import { PinInput } from 'react-input-pin-code';
 
-import $ from 'jquery';
-
 import './style.scss';
-import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
-import { Form } from 'react-router-dom';
-import { notify } from '../../lib/notifications';
+import LoadingOverlay from '../../../LoadingOverlay/LoadingOverlay';
+import { notify, notifyPromise, updateNotify } from '../../../../lib/notifications';
+import { getApiUrl } from '../../../../constants/functions';
 
-export default function VerifyAccountModal({
-    show,
-    setShow,
-    userCode,
-}: {
-    show: boolean;
-    setShow: (show: boolean) => void;
-    userCode: string;
-}) {
+import useVerify from '../../../../services/useVerify';
+
+export default function VerifyAccountModal() {
+    const { code, setCode, setShowVerifyModal, setShowCreateModal, showVerifyModal, setUserData } = useVerify();
     const [loading, setLoading] = useState(false);
-    const [pin, setPin] = useState(['', '', '', '', '', '']);
+
+    useEffect(() => {
+        if (!showVerifyModal) {
+            return;
+        }
+        setCode(['', '', '', '', '', '']);
+    }, [showVerifyModal]);
 
     function onPinChange(value: any, index: number, values: string[]) {
-        setPin(values);
+        setCode(values);
 
         let isFinished = true;
 
@@ -39,24 +37,38 @@ export default function VerifyAccountModal({
             return;
         }
 
-        $('input:focus').trigger('blur');
-        setLoading(true);
+        const api = async () => {
+            const notifyId = notifyPromise('Weryfikowanie wprowadzonego kodu...');
+            const response = await fetch(getApiUrl('auth', 'verifyCode', values.join('')));
+            setLoading(true);
 
-        setTimeout(() => {
-            setShow(false);
-            setLoading(false);
+            const data = await response.json();
 
-            notify('Pomyślnie aktywowałeś swoje konto.', {
-                type: 'success',
-            });
-        }, 2000);
+            if (data.error) {
+                updateNotify(notifyId, data.message, false, {
+                    type: 'error',
+                });
+                setLoading(false);
+            } else {
+                updateNotify(notifyId, 'Kod jest poprawny. Wprowadz dane logowania.', false, {
+                    type: 'success',
+                });
+
+                setUserData(data.data.user);
+                setShowVerifyModal(false);
+                setLoading(false);
+                setShowCreateModal(true);
+            }
+        };
+
+        api();
     }
 
     return (
         <Modal
-            show={show}
+            show={showVerifyModal}
             onHide={() => {
-                setShow(false);
+                setShowVerifyModal(false);
             }}
             backdrop={'static'}
             keyboard={false}
@@ -73,7 +85,7 @@ export default function VerifyAccountModal({
                             containerClassName={'pin-input__container blur'}
                             inputClassName={'pin-input__container__input'}
                             onChange={onPinChange}
-                            values={pin}
+                            values={code as string[]}
                             showState={false}
                             placeholder={''}
                             id="pin-input"

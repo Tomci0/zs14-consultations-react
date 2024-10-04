@@ -39,10 +39,28 @@
                 flex-direction: column;
                 align-items: flex-start;
 
+                @media (max-width: 991px) {
+                    align-items: center;
+
+                    gap: 0.5rem;
+
+                    .item {
+                        flex-direction: column;
+
+                        gap: 0rem !important;
+                    }
+                }
+
                 .item {
                     display: flex;
                     align-items: center;
                     gap: 0.25rem;
+
+                    .item-label {
+                        display: flex;
+                        gap: 0.25rem;
+                        align-items: center;
+                    }
                 }
 
                 .label {

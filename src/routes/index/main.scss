@@ -1,23 +1,21 @@
 #content {
-    position: absolute;
-    top: 50%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    // width: 8%;
-    color: var(--index-text-color);
+    align-items: center;
 
-    background-color: var(--background);
-    box-shadow: 1px 1px 7px 1px var(--shadow-color);
+    #welcome-card {
+        color: var(--index-text-color);
 
-    padding: 1rem;
+        background-color: var(--background);
+        box-shadow: 1px 1px 7px 1px var(--shadow-color);
 
-    border-radius: 15px;
+        padding: 1rem;
 
-    .welcome-text {
+        border-radius: 15px;
+
         display: flex;
+        align-items: center;
         gap: 1rem;
 
-        .logo img {
+        img.logo {
             width: 100px;
             height: 100px;
         }

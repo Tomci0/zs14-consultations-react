@@ -4,6 +4,7 @@ import ThemeChanger from '../../theme-changer';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Icon } from '@iconify/react';
 import AuthenticationCard from '../AuthenticationCard';
+import { VerifyProvider } from '../../../services/useVerify';
 
 export default function AuthButton() {
     const [dropped, setDropped] = useState(false);
@@ -31,7 +32,9 @@ export default function AuthButton() {
                         ],
                     }}
                 >
-                    <AuthenticationCard />
+                    <VerifyProvider>
+                        <AuthenticationCard />
+                    </VerifyProvider>
                 </Dropdown.Menu>
             </Dropdown>
         </div>

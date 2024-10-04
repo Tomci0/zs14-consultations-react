@@ -1,25 +1,23 @@
+import { getApiUrl } from '../constants/functions';
+import IConsultation from '../types/consultation.type';
+import IScope from '../types/scope.types';
+import IUser from '../types/user.type';
+
 export interface ISignedConsultation {
-    id: string;
+    user: string | IUser;
+    consultation: string | IConsultation;
     date: Date;
     reason: string;
-    scope: string | number;
+    scope: string | IScope;
 }
 
-const userConsultations: ISignedConsultation[] = [
-    {
-        id: '1',
-        date: new Date('2024-09-02T18:00:00'),
-        reason: 'Dział 1',
-        scope: 1,
-    },
-    {
-        id: '2',
-        date: new Date('2024-09-02T18:00:00'),
-        reason: 'Dział 1',
-        scope: 1,
-    },
-];
+export default async function getUserConsultations(user_id: string) {
+    const response = await fetch(getApiUrl('consultations', 'signed'), {
+        method: 'GET',
+        credentials: 'include',
+    });
 
-export default function getUserConsultations() {
-    return userConsultations;
+    const data = await response.json();
+
+    return data.data;
 }

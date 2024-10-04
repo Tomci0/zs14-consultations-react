@@ -1,10 +1,9 @@
 import React from 'react';
-import IConsultation from '../../types/consultation.type';
 import Consultation from './consultation';
 import { ISignedConsultation } from '../../api/getUserConsultations';
-import Consultations from '.';
-import { formatDate } from '../../lib/formatter';
-import { format } from 'path';
+
+import moment from 'moment';
+import IConsultation from '../../types/consultation.type';
 
 interface ISortedConsultations {
     title: string;
@@ -15,65 +14,16 @@ export default function List({ consultations }: { consultations: ISignedConsulta
     const sortedConsultations: ISortedConsultations[] = [];
 
     consultations.forEach((consultation) => {
-        const currentDate = new Date();
-        const date = new Date(consultation.date);
-        const day = date.getDate();
-        const month = date.getMonth();
-        const year = date.getFullYear();
+        const consultationDate = new Date((consultation.consultation as IConsultation).date);
 
-        // only today
-
-        if (currentDate.getDate() === day && currentDate.getMonth() === month && currentDate.getFullYear() === year) {
-            if (!sortedConsultations[0]) {
-                sortedConsultations[0] = {
-                    title: 'Dzisiaj',
-                    consultations: [consultation],
-                };
-            } else {
-                sortedConsultations[0].consultations.push(consultation);
-            }
-        }
-
-        // W tym tygodniu
-
-        const weekEnd = new Date();
-        weekEnd.setDate(day + (6 - currentDate.getDay()));
-
-        if (date >= currentDate && date <= weekEnd) {
-            if (!sortedConsultations[1]) {
-                sortedConsultations[1] = {
-                    title: 'W tym tygodniu',
-                    consultations: [consultation],
-                };
-            } else {
-                sortedConsultations[1].consultations.push(consultation);
-            }
-        }
-
-        // W tym miesiącu
-
-        if (date.getMonth() === currentDate.getMonth() && date.getFullYear() === currentDate.getFullYear()) {
-            if (!sortedConsultations[2]) {
-                sortedConsultations[2] = {
-                    title: 'W tym miesiącu',
-                    consultations: [consultation],
-                };
-            } else {
-                sortedConsultations[2].consultations.push(consultation);
-            }
-        }
-
-        // W 
-
-        if (date.getFullYear() === currentDate.getFullYear()) {
-            if (!sortedConsultations[3]) {
-                sortedConsultations[3] = {
-                    title: 'Inne',
-                    consultations: [consultation],
-                };
-            } else {
-                sortedConsultations[3].consultations.push(consultation);
-            }
+        if (isDateToday(consultationDate)) {
+            addToSection(sortedConsultations, 'Dzisiaj', consultation);
+        } else if (isDateInThisWeek(consultationDate)) {
+            addToSection(sortedConsultations, 'W tym tygodniu', consultation);
+        } else if (isDateInThisMonth(consultationDate)) {
+            addToSection(sortedConsultations, 'W tym miesiącu', consultation);
+        } else {
+            addToSection(sortedConsultations, 'Inne', consultation);
         }
     });
 
@@ -94,3 +44,41 @@ export default function List({ consultations }: { consultations: ISignedConsulta
 function Label({ title }: { title: string }) {
     return <div className="consultation-list__label">{title}</div>;
 }
+
+function isDateToday(date: Date) {
+    return (
+        date.getDate() == new Date().getDate() &&
+        date.getMonth() == new Date().getMonth() &&
+        date.getFullYear() == new Date().getFullYear()
+    );
+}
+
+function isDateInThisWeek(consultationDate: Date) {
+    const startWeek = moment().startOf('week').toDate();
+    const endWeek = moment().endOf('week').toDate();
+
+    return consultationDate > startWeek && consultationDate < endWeek;
+}
+
+function isDateInThisMonth(consultationDate: Date) {
+    const startMonth = moment().startOf('month').toDate();
+    const endMonth = moment().endOf('month').toDate();
+
+    return consultationDate > startMonth && consultationDate < endMonth;
+}
+
+const addToSection = (
+    sortedConsultations: {
+        title: string;
+        consultations: ISignedConsultation[];
+    }[],
+    title: string,
+    consultation: ISignedConsultation
+) => {
+    let section = sortedConsultations.find((section: any) => section.title === title);
+    if (!section) {
+        section = { title, consultations: [] };
+        sortedConsultations.push(section);
+    }
+    section.consultations.push(consultation);
+};

@@ -6,9 +6,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import IUser from '../../types/user.type';
 
 import useAuth from '../../services/useAuth';
+import { NavLink } from 'react-router-dom';
+import useUserActions from '../../hooks/userActions';
 
 export default function UserMobile() {
     const { user } = useAuth();
+    const { handleLogout } = useUserActions();
     return (
         <Dropdown as="span" drop={'down-centered'}>
             <Dropdown.Toggle as={'a'} className="nav-item user">
@@ -20,10 +23,22 @@ export default function UserMobile() {
                 </div>
             </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            <Dropdown.Menu
+                popperConfig={{
+                    modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: [0, 30],
+                            },
+                        },
+                    ],
+                }}
+            >
+                <Dropdown.Item onClick={handleLogout}>
+                    <Icon className="icon" icon="mdi:logout" />
+                    <span className="name">Wyloguj się</span>
+                </Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );
