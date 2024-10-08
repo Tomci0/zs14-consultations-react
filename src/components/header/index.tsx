@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './main.scss';
 
 import { Icon } from '@iconify/react';
-import { useMediaQuery } from 'react-responsive';
 
 import NavItem from './nav-item';
 import User from './user';

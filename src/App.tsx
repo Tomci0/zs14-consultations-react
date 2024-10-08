@@ -1,18 +1,12 @@
-import { useEffect, useState } from 'react';
-
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import Header from './components/header';
 
-import Index from './routes/index';
-import Calendar from './routes/calendar';
-import Consultations from './routes/consultations';
-
-import IUser from './types/user.type';
-import getUser from './api/getCurrentUser';
+import Index from './routes/index/index';
+import Calendar from './routes/calendar/index';
+import Consultations from './routes/consultations/index';
 import { ToastContainer } from 'react-toastify';
-import useAuth, { AuthProvider } from './services/useAuth';
-import PrivateRoute from './services/PrivateRoute';
+import { AuthProvider } from './services/useAuth';
 
 function Main() {
     const location = useLocation();

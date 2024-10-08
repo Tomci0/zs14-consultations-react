@@ -1,18 +1,13 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
-import { Card, FloatingLabel, Form } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
 
 import './style.scss';
 
 import VerifyAccountModal from '../modals/VerifyAccountModal';
 import ResetPasswordModal from '../modals/ResetPasswordModal';
 import CreateAccountModal from '../modals/CreateAccountModal';
-import LogIn from '../../../api/logIn';
 
-import useAuth from '../../../services/useAuth';
-
-import { notify, notifyPromise, updateNotify } from '../../../lib/notifications';
-import IUser from '../../../types/user.type';
 import useVerify from '../../../services/useVerify';
 
 import useLoginActions from '../../../hooks/loginActions';

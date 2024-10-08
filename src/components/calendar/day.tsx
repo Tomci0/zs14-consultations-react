@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import PlateList from './platelist';
-import getConsultations from '../../api/getConsultations';
 import IConsultation from '../../types/consultation.type';
 
 import useConsultation from '../../services/useConsultations';

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import IConsultation from '../../../../types/consultation.type';
@@ -110,7 +110,7 @@ export default function ConsultationInfoModal({
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    {hideButton != true && isLogged && !consultationData.isSigned && canSign && (
+                    {hideButton !== true && isLogged && !consultationData.isSigned && canSign && (
                         <Button
                             className="btn-modal"
                             variant="none"

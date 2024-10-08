@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Icon } from '@iconify/react';
 import { ETime } from '../../types/enums';
@@ -6,11 +6,7 @@ import { ETime } from '../../types/enums';
 import ConsultationInfoModal from './modals/consultation-info';
 import IConsultation from '../../types/consultation.type';
 
-import useAuth from '../../services/useAuth';
-import useConsultations from '../../services/useConsultations';
-
 export default function Plate({ data }: { data: IConsultation }) {
-    const { isLogged } = useAuth();
     const [show, setShow] = useState<boolean>(false);
     function handleClick() {
         setShow(true);

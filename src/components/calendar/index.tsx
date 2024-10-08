@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import './main.scss';
 
@@ -9,15 +9,13 @@ import Datepicker from './datepicker';
 import Week from './week';
 import Day from './day';
 
-import IConsultation from '../../types/consultation.type';
-import getConsultations from '../../api/getConsultations';
 import useAuth from '../../services/useAuth';
 import useConsultation from '../../services/useConsultations';
 
 export default function Calendar() {
     const { isLogged } = useAuth();
     const { consultations, setConsultations } = useConsultation();
-    const [schoolYear, setSchoolYear] = useState({
+    const [schoolYear] = useState({
         start: new Date('2024-09-02'),
         end: new Date('2025-06-20'),
     });

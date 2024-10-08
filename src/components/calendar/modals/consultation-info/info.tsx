@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Icon } from '@iconify/react';
-import { EBuilding, ETime } from '../../../../types/enums';
+import { ETime } from '../../../../types/enums';
 import IConsultation from '../../../../types/consultation.type';
 
 import { Title } from './index';

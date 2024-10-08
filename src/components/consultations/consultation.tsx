@@ -12,7 +12,7 @@ import IConsultation from '../../types/consultation.type';
 
 export default function Consultation({ data }: { data: ISignedConsultation }) {
     const [show, setShow] = useState<boolean>(false);
-    const [consultationData, setConsultationData] = useState<any>(data.consultation as IConsultation);
+    const [consultationData] = useState<any>(data.consultation as IConsultation);
 
     if (!consultationData) {
         return <></>;
