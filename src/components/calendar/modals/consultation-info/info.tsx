@@ -7,6 +7,7 @@ import IConsultation from '../../../../types/consultation.type';
 import { Title } from './index';
 
 import { formatDate } from '../../../../lib/formatter';
+import IUser from '../../../../types/user.type';
 
 export default function Info({ data }: { data: IConsultation }) {
     return (
@@ -38,7 +39,12 @@ export default function Info({ data }: { data: IConsultation }) {
                     <Item
                         icon="mdi:chair-school"
                         label="Liczba miejsc"
-                        value={data.students + '/' + data.max_students.toString()}
+                        value={
+                            ((typeof data.students === 'number' && data.students) ||
+                                (data.students as IUser[]).length) +
+                            '/' +
+                            data.max_students.toString()
+                        }
                     />
                 ) : (
                     ''

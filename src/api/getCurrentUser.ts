@@ -11,7 +11,7 @@ interface ApiResponse extends Response {
     };
     message: string;
     isLogged?: boolean;
-    user?: IUser;
+    data?: any;
 }
 
 export default async function getCurrentUser(): Promise<any> {
@@ -22,9 +22,9 @@ export default async function getCurrentUser(): Promise<any> {
 
     const data: ApiResponse = await response.json();
 
-    if (data.user?.isLogged) {
-        data.user.isLogged = true;
-        return data.user;
+    if (data.data?.isLogged) {
+        data.data.isLogged = true;
+        return data.data;
     } else {
         return { isLogged: false } as IUser;
     }

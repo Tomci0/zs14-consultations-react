@@ -16,7 +16,7 @@ export default interface IConsultation {
     color?: string;
 
     max_students?: number;
-    students?: number;
+    students?: number | IUser[];
     end_signing_up?: Date;
 
     description?: string;

@@ -43,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     useEffect(() => {
         getCurrentUser()
             .then((user) => {
+                console.log(user);
                 setUser(user);
                 setIsLogged(user.isLogged);
                 setLoading(false);
