@@ -1,0 +1,6 @@
+{
+    "API_URL": "http://localhost:3000",
+    "API_VERSION": "v1",
+
+    "ADMIN_PANEL_URL": "http://localhost:3001"
+}

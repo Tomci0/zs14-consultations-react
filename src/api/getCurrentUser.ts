@@ -15,17 +15,23 @@ interface ApiResponse extends Response {
 }
 
 export default async function getCurrentUser(): Promise<any> {
-    const response = await fetch(getApiUrl('users', 'me'), {
-        method: 'GET',
-        credentials: 'include',
-    });
+    try {
+        const response = await fetch(getApiUrl('users', 'me'), {
+            method: 'GET',
+            credentials: 'include',
+        });
 
-    const data: ApiResponse = await response.json();
+        const data: ApiResponse = await response.json();
 
-    if (data.data?.isLogged) {
-        data.data.isLogged = true;
-        return data.data;
-    } else {
+        if (data.data?.isLogged) {
+            data.data.isLogged = true;
+            return data.data;
+        } else {
+            return { isLogged: false } as IUser;
+        }
+    } catch (error) {
+        console.error('Error while fetching user data:', error);
         return { isLogged: false } as IUser;
+        // throw error;
     }
 }

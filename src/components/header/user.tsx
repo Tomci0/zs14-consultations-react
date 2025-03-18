@@ -51,7 +51,7 @@ export default function User() {
                         }}
                     >
                         {(user.isAdmin || user.isTeacher) && (
-                            <Dropdown.Item href="#">
+                            <Dropdown.Item href="http://localhost:3001">
                                 <Icon icon="mdi:shield-user" />
                                 <span className="name">Panel Administratora</span>
                             </Dropdown.Item>

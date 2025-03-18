@@ -35,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     const [error, setError] = useState<any>(undefined);
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (error) setError(undefined);
@@ -43,12 +44,13 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     useEffect(() => {
         getCurrentUser()
             .then((user) => {
-                console.log(user);
                 setUser(user);
                 setIsLogged(user.isLogged);
                 setLoading(false);
             })
             .catch((error) => {
+                navigate('https://konsultacje.zs14.tech?error=authError');
+
                 setError(error);
                 setLoading(false);
             });
