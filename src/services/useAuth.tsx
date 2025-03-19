@@ -50,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
             })
             .catch((error) => {
                 navigate('https://konsultacje.zs14.tech?error=authError');
+                // clear jwtToken cookie
 
                 setError(error);
                 setLoading(false);
@@ -97,6 +98,8 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
                 updateNotify(toastId, 'Wylogowano pomyślnie.', false, { type: 'success' });
                 setUser({ isLogged: false });
                 setIsLogged(false);
+                // change location to home
+                navigate('/');
                 return;
             })
             .catch((error) => {
